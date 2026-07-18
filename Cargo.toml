@@ -1,0 +1,36 @@
+[package]
+name = "resume-maker-slint"
+version = "0.2.0"
+edition = "2024"
+license = "MIT"
+description = "A Resume maker using Slint"
+
+[package.metadata.deb]
+# Let cargo-deb automatically inherit "cad-helper-3d" from the main package name
+maintainer = "HangoverHGV"
+depends = "$auto, libxkbcommon0, fontconfig"
+section = "utils"
+priority = "optional"
+
+# Map project files into the Linux target paths
+assets = [
+    # 1. Install the binary
+    ["target/release/resume-maker-slint", "usr/bin/resume-maker-slint", "755"],
+    # 2. Install the app icon
+    ["ui/images/ico.svg", "usr/share/icons/hicolor/scalable/apps/resume-maker-slint.svg", "644"],
+    # 3. Create the Desktop file shortcut launcher
+    ["release/debian/resume-maker-slint.desktop", "usr/share/applications/resume-maker-slint.desktop", "644"]
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+slint = "1.17.1"
+strum = { version = "0.28.0", features = ["derive"] }
+
+[build-dependencies]
+slint-build = "1.17.1"
+
+[profile.release]
+codegen-units = 1
+lto = true
