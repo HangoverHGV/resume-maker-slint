@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::fs::{self, File};
 use std::io::Write;
 use std::path::Path;
-use crate::save_informations::json_definition::{PersonalInfo, ResumeContainer, ResumeEntry};
+use crate::save_information::json_definition::{PersonalInfo, ResumeContainer, ResumeEntry};
 
 pub fn save_file_json(cv_name: String, name: String, job_title: String, email: String, phone: String,
                  location: String, linkedin: String, github: String, website: String) {
@@ -13,14 +13,14 @@ pub fn save_file_json(cv_name: String, name: String, job_title: String, email: S
     }
 
     let info = PersonalInfo{
-        name: name,
-        job_title: job_title,
-        email: email,
-        phone: phone,
-        location: location,
-        linkedin: linkedin,
-        github: github,
-        website: website,
+        name,
+        job_title,
+        email,
+        phone,
+        location,
+        linkedin,
+        github,
+        website,
     };
 
     let mut resume_map = HashMap::new();

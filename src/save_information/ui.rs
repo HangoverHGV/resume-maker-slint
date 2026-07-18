@@ -1,6 +1,6 @@
 use slint::ComponentHandle;
 use crate::AppWindow;
-use crate::save_informations::save_json::save_file_json;
+use crate::save_information::save_json::save_file_json;
 
 pub fn setup_personal_data_save(ui: &AppWindow){
     let ui_handle = ui.as_weak();
