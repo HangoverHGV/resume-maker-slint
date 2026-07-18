@@ -9,19 +9,26 @@ export component AppWindow inherits Window {
     preferred-width: 1000px;
     preferred-height: 700px;
 
+    callback save-personal-info(string, string, string, string, string, string, string, string, string);
 
     HorizontalLayout {
+
         side-bar := SideBar {
             accessible-role: navigation;
             accessible-label: "Sidebar";
             model: [
                 "Personal Info",
-                ];
+            ];
         }
+
         VerticalLayout {
             accessible-role: main;
             accessible-label: "Content";
-            if (side-bar.current-item == 0): PersonalPage{}
+            if (side-bar.current-item == 0): PersonalPage {
+                save-personal-info(cv_name, name, job_title, emai, phone, location, linkedin, github, website) => {
+                    root.save-personal-info(cv_name, name, job_title, emai, phone, location, linkedin, github, website);
+                }
+            }
         }
     }
 }

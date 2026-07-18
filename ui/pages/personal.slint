@@ -1,37 +1,195 @@
 import { Page } from "../components/page.slint";
 import { Styling } from "../assets/styles.slint";
-import { GroupBox, VerticalBox, LineEdit } from "std-widgets.slint";
+import {
+    GroupBox,
+    VerticalBox,
+    LineEdit,
+    TextEdit,
+    HorizontalBox,
+} from "std-widgets.slint";
 
 
-export component PersonalPage inherits Page{
+export component PersonalPage inherits Page {
     title: "Personal Info";
 
-    callback save-personal-info(string, string, string, string, string, string, string, string);
+    callback save-personal-info(string, string, string, string, string, string, string, string, string);
 
     function run() {
-//        root.save-personal-info(name_input.text,)
+        root.save-personal-info(cv_name_input.text, name_input.text, job_title.text, email_input.text, phone_input.text,
+        location_input.text, linkedin_input.text, github_input.text, website_input.text);
     }
 
     GroupBox {
         VerticalBox {
+
             spacing: Styling.default-spacing;
             alignment: start;
             padding: Styling.default-padding;
 
-            Text{
-                text: "Name";
+            Text {
+                text: "CV Name";
                 font-size: Styling.font-size-normal;
             }
-            name_input := LineEdit {
-                placeholder-text: "John Doe";
+
+            cv_name_input := LineEdit {
+                placeholder-text: "My CV";
                 text: "";
                 input-type: text;
+                font-size: Styling.font-size-normal;
                 accepted => {
                     run();
                 }
             }
 
+            HorizontalBox {
+                spacing: Styling.default-spacing;
+                padding: Styling.default-padding;
+
+                Text {
+                    text: "Name";
+                    font-size: Styling.font-size-normal;
+                }
+
+                name_input := LineEdit {
+                    placeholder-text: "John Doe";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+
+                Text {
+                    text: "Job Title";
+                    font-size: Styling.font-size-normal;
+                }
+
+                job_title := LineEdit {
+                    placeholder-text: "Data Scientist";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+            }
+
+            HorizontalBox {
+                spacing: Styling.default-spacing;
+                padding: Styling.default-padding;
+                Text {
+                    text: "E-mail";
+                    font-size: Styling.font-size-normal;
+                }
+
+                email_input := LineEdit {
+                    placeholder-text: "email@example.com";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+
+                    accepted => {
+                        run();
+                    }
+                }
+
+                Text {
+                    text: "Phone";
+                    font-size: Styling.font-size-normal;
+                }
+
+                phone_input := LineEdit {
+                    placeholder-text: "+40 1234 5678";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+
+                Text {
+                    text: "Location";
+                    font-size: Styling.font-size-normal;
+                }
+
+                location_input := LineEdit {
+                    placeholder-text: "Romania";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+            }
+
+            HorizontalBox {
+                spacing: Styling.default-spacing;
+                padding: Styling.default-padding;
+
+                Text {
+                    text: "Linked-In";
+                    font-size: Styling.font-size-normal;
+                }
+
+                linkedin_input := LineEdit {
+                    placeholder-text: "https://www.linkedin.com/in/jdoe";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+
+                Text {
+                    text: "GitHub";
+                    font-size: Styling.font-size-normal;
+                }
+
+                github_input := LineEdit {
+                    placeholder-text: "https://github.com/jdoe";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+
+                Text {
+                    text: "Website";
+                    font-size: Styling.font-size-normal;
+                }
+
+                website_input := LineEdit {
+                    placeholder-text: "https://jdoe.dev";
+                    text: "";
+                    input-type: text;
+                    font-size: Styling.font-size-normal;
+                    accepted => {
+                        run();
+                    }
+                }
+            }
+
+            Text {
+                text: "Description";
+                font-size: Styling.font-size-normal;
+            }
+
+            description_input := TextEdit {
+                placeholder-text: "Description";
+                text: "";
+                wrap: word-wrap;
+                font-size: Styling.font-size-normal;
+                enabled: true;
+                width: 100%;
+                height: 120px;
+            }
         }
     }
-
 }
