@@ -4814,6 +4814,7 @@ name = "resume-maker-slint"
 version = "0.2.0"
 dependencies = [
  "serde",
+ "serde_json",
  "slint",
  "slint-build",
  "strum 0.28.0",
