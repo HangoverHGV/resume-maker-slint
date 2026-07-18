@@ -1,33 +1,27 @@
-import { LineEdit, Button } from "std-widgets.slint";
+import { SideBar } from "components/side_bar.slint";
+import { PersonalPage } from "./pages/personal.slint";
+
+
 export component AppWindow inherits Window {
-    width: 400px;
-    height: 300px;
     title: "Resume Maker";
+    maximized: false;
 
-    // 1. Define properties that Rust can read from
-    in-out property <string> user-name: name-input.text;
-    in-out property <string> user-email: email-input.text;
-    in-out property <string> user-phone: phone-input.text;
+    preferred-width: 1000px;
+    preferred-height: 700px;
 
-    // 2. Define the callback hook for the button click
-    callback generate-resume();
 
-    VerticalLayout {
-        padding: 20px;
-        spacing: 10px;
-
-        Text { text: "Name:"; font-size: 1px; }
-        name-input := LineEdit { text: "Jane Doe"; }
-
-        Text { text: "Email:"; font-size: 1px; }
-        email-input := LineEdit { text: "jane.doe@example.com"; }
-
-        Text { text: "Phone:"; font-size: 1px; }
-        phone-input := LineEdit { text: "555-0199"; }
-
-        Button {
-            text: "Generate PDF Resume";
-            clicked => { root.generate-resume(); }
+    HorizontalLayout {
+        side-bar := SideBar {
+            accessible-role: navigation;
+            accessible-label: "Sidebar";
+            model: [
+                "Personal Info",
+                ];
+        }
+        VerticalLayout {
+            accessible-role: main;
+            accessible-label: "Content";
+            if (side-bar.current-item == 0): PersonalPage{}
         }
     }
 }

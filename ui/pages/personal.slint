@@ -1,0 +1,37 @@
+import { Page } from "../components/page.slint";
+import { Styling } from "../assets/styles.slint";
+import { GroupBox, VerticalBox, LineEdit } from "std-widgets.slint";
+
+
+export component PersonalPage inherits Page{
+    title: "Personal Info";
+
+    callback save-personal-info(string, string, string, string, string, string, string, string);
+
+    function run() {
+//        root.save-personal-info(name_input.text,)
+    }
+
+    GroupBox {
+        VerticalBox {
+            spacing: Styling.default-spacing;
+            alignment: start;
+            padding: Styling.default-padding;
+
+            Text{
+                text: "Name";
+                font-size: Styling.font-size-normal;
+            }
+            name_input := LineEdit {
+                placeholder-text: "John Doe";
+                text: "";
+                input-type: text;
+                accepted => {
+                    run();
+                }
+            }
+
+        }
+    }
+
+}
