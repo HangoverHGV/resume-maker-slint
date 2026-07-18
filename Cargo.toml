@@ -25,8 +25,11 @@ assets = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+serde = { version = "1.0.228", features = ["derive"] }
 slint = "1.17.1"
 strum = { version = "0.28.0", features = ["derive"] }
+tera = "2.0.0"
+typst-as-lib = "0.16.0"
 
 [build-dependencies]
 slint-build = "1.17.1"
