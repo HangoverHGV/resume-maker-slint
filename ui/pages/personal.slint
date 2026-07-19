@@ -6,21 +6,56 @@ import {
     LineEdit,
     TextEdit,
     HorizontalBox,
+    Button,
 } from "std-widgets.slint";
-
 
 export component PersonalPage inherits Page {
     title: "Personal Info";
 
+    in-out property <string> cv-name;
+    in-out property <string> field-name;
+    in-out property <string> field-job-title;
+    in-out property <string> field-email;
+    in-out property <string> field-phone;
+    in-out property <string> field-location;
+    in-out property <string> field-linkedin;
+    in-out property <string> field-github;
+    in-out property <string> field-website;
+    in-out property <string> field-description;
+
     callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
 
     function run() {
-        root.save-personal-info(cv_name_input.text, name_input.text, job_title.text, email_input.text, phone_input.text,
-        location_input.text, linkedin_input.text, github_input.text, website_input.text, description_input.text);
+        root.save-personal-info(
+            root.cv-name,
+            root.field-name,
+            root.field-job-title,
+            root.field-email,
+            root.field-phone,
+            root.field-location,
+            root.field-linkedin,
+            root.field-github,
+            root.field-website,
+            root.field-description
+        );
     }
 
     GroupBox {
         VerticalBox {
+            HorizontalBox {
+                alignment: start;
+                padding: 0px;
+                spacing: 5px;
+                Button {
+                    max-width: 50px;
+                    text: "Save";
+                    primary: true;
+
+                    clicked => {
+                        run()
+                    }
+                }
+            }
 
             spacing: Styling.default-spacing;
             alignment: start;
@@ -31,9 +66,9 @@ export component PersonalPage inherits Page {
                 font-size: Styling.font-size-normal;
             }
 
-            cv_name_input := LineEdit {
+            LineEdit {
                 placeholder-text: "My CV";
-                text: "";
+                text <=> root.cv-name;
                 input-type: text;
                 font-size: Styling.font-size-normal;
                 accepted => {
@@ -50,9 +85,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                name_input := LineEdit {
+                LineEdit {
                     placeholder-text: "John Doe";
-                    text: "";
+                    text <=> root.field-name;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -65,9 +100,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                job_title := LineEdit {
+                LineEdit {
                     placeholder-text: "Data Scientist";
-                    text: "";
+                    text <=> root.field-job-title;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -84,12 +119,11 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                email_input := LineEdit {
+                LineEdit {
                     placeholder-text: "email@example.com";
-                    text: "";
+                    text <=> root.field-email;
                     input-type: text;
                     font-size: Styling.font-size-normal;
-
                     accepted => {
                         run();
                     }
@@ -100,9 +134,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                phone_input := LineEdit {
+                LineEdit {
                     placeholder-text: "+40 1234 5678";
-                    text: "";
+                    text <=> root.field-phone;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -115,9 +149,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                location_input := LineEdit {
+                LineEdit {
                     placeholder-text: "Romania";
-                    text: "";
+                    text <=> root.field-location;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -135,9 +169,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                linkedin_input := LineEdit {
+                LineEdit {
                     placeholder-text: "https://www.linkedin.com/in/jdoe";
-                    text: "";
+                    text <=> root.field-linkedin;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -150,9 +184,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                github_input := LineEdit {
+                LineEdit {
                     placeholder-text: "https://github.com/jdoe";
-                    text: "";
+                    text <=> root.field-github;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -165,9 +199,9 @@ export component PersonalPage inherits Page {
                     font-size: Styling.font-size-normal;
                 }
 
-                website_input := LineEdit {
+                LineEdit {
                     placeholder-text: "https://jdoe.dev";
-                    text: "";
+                    text <=> root.field-website;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -181,9 +215,9 @@ export component PersonalPage inherits Page {
                 font-size: Styling.font-size-normal;
             }
 
-            description_input := TextEdit {
+            TextEdit {
                 placeholder-text: "Description";
-                text: "";
+                text <=> root.field-description;
                 wrap: word-wrap;
                 font-size: Styling.font-size-normal;
                 enabled: true;

@@ -62,6 +62,18 @@ export component AppWindow inherits Window {
             accessible-role: main;
             accessible-label: "Content";
             if (side-bar.current-item == 0): PersonalPage {
+
+                cv-name: root.cv-name;
+                        field-name: root.field-name;
+                        field-job-title: root.field-job-title;
+                        field-email: root.field-email;
+                        field-phone: root.field-phone;
+                        field-location: root.field-location;
+                        field-linkedin: root.field-linkedin;
+                        field-github: root.field-github;
+                        field-website: root.field-website;
+                        field-description: root.field-description;
+
                 save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description) => {
                     root.save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description);
                 }
