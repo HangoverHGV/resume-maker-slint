@@ -1,7 +1,6 @@
 use std::collections::HashMap;
-use std::fs::{self, File};
+use std::fs::File;
 use std::io::{Read, Write};
-use std::path::Path;
 
 use crate::save_information::json_setup::{PersonalInfo, ResumeContainer};
 use crate::save_information::json_setup::RESUME_SAVE_FILE;
