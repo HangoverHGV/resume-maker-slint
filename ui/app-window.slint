@@ -11,8 +11,19 @@ export component AppWindow inherits Window {
 
     in-out property <[string]> resumes-list;
 
+    in-out property <string> cv-name;
+    in-out property <string> field-name;
+    in-out property <string> field-job-title;
+    in-out property <string> field-email;
+    in-out property <string> field-phone;
+    in-out property <string> field-location;
+    in-out property <string> field-linkedin;
+    in-out property <string> field-github;
+    in-out property <string> field-website;
+    in-out property <string> field-description;
+
     callback menu-item-clicked(string, string); //(resume_name, action_type)
-    callback save-personal-info(string, string, string, string, string, string, string, string, string);
+    callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
 
     MenuBar {
         Menu {
@@ -51,8 +62,8 @@ export component AppWindow inherits Window {
             accessible-role: main;
             accessible-label: "Content";
             if (side-bar.current-item == 0): PersonalPage {
-                save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website) => {
-                    root.save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website);
+                save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description) => {
+                    root.save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description);
                 }
             }
         }

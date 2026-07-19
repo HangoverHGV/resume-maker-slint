@@ -14,7 +14,8 @@ pub fn save_file_json(
     location: String,
     linkedin: String,
     github: String,
-    website: String
+    website: String,
+    description: String,
 ) {
     let info = PersonalInfo {
         name,
@@ -25,6 +26,7 @@ pub fn save_file_json(
         linkedin,
         github,
         website,
+        description
     };
 
     let file_path = &*RESUME_SAVE_FILE;

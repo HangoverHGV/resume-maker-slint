@@ -8,12 +8,12 @@ use crate::save_information::delete_json::delete_resume_from_json;
 pub fn setup_personal_data_save(ui: &AppWindow){
     ui.on_save_personal_info(move |cv_name, name, job_title,
                                    email, phone, location,
-                                   linkedin, github, website |{
+                                   linkedin, github, website, description |{
 
 
         save_file_json(cv_name.to_string(),
                        name.to_string(), job_title.to_string(), email.to_string(), phone.to_string(),
-                       location.to_string(), linkedin.to_string(), github.to_string(), website.to_string());
+                       location.to_string(), linkedin.to_string(), github.to_string(), website.to_string(), description.to_string());
 
     });
 }

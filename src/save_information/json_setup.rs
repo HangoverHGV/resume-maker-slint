@@ -23,6 +23,7 @@ pub struct PersonalInfo{
     pub linkedin: String,
     pub github: String,
     pub website: String,
+    pub description: String,
 }
 
 // #[derive(Serialize, Deserialize, Debug)]

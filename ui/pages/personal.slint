@@ -12,11 +12,11 @@ import {
 export component PersonalPage inherits Page {
     title: "Personal Info";
 
-    callback save-personal-info(string, string, string, string, string, string, string, string, string);
+    callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
 
     function run() {
         root.save-personal-info(cv_name_input.text, name_input.text, job_title.text, email_input.text, phone_input.text,
-        location_input.text, linkedin_input.text, github_input.text, website_input.text);
+        location_input.text, linkedin_input.text, github_input.text, website_input.text, description_input.text);
     }
 
     GroupBox {
