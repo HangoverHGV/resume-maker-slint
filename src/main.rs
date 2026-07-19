@@ -12,6 +12,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     save_information::setup_resume_list(&ui);
     save_information::setup_personal_data_save(&ui);
+    save_information::resume_actions(&ui);
 
 
     // 4. Run the application

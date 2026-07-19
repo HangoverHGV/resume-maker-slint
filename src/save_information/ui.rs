@@ -3,6 +3,7 @@ use crate::AppWindow;
 use std::rc::Rc;
 use crate::save_information::save_json::save_file_json;
 use crate::save_information::load_json::load_all_resumes;
+use crate::save_information::delete_json::delete_resume_from_json;
 
 pub fn setup_personal_data_save(ui: &AppWindow){
     let ui_handle = ui.as_weak();
@@ -41,4 +42,32 @@ pub fn setup_resume_list(ui: &AppWindow) {
 
     let model = Rc::new(VecModel::from(names));
     ui.set_resumes_list(model.into());
+}
+
+pub fn resume_actions(ui: &AppWindow){
+    let ui_hande = ui.as_weak();
+    ui.on_menu_item_clicked(move |resume_name, action_type| {
+        let resume = resume_name.as_str();
+        let action = action_type.as_str();
+
+        match action {
+            "edit" => {
+                println!("TO DO");
+            }
+            "delete" => {
+                match delete_resume_from_json(resume){
+                    Ok(_) => {
+                        if let Some(ui) =ui_hande.upgrade(){
+                            setup_resume_list(&ui);
+                        }
+                    }
+                    Err(e) => {
+                        eprintln!("Failed to delete resume entry: {}", e);
+                    }
+                }
+            }
+            _ => {}
+
+        }
+    });
 }

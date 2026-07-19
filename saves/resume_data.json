@@ -1,15 +1,15 @@
 {
   "resumes": [
     {
-      "test": {
-        "name": "John Doe",
-        "job_title": "DS",
-        "email": "email@example.com",
-        "phone": "07844305222",
-        "location": "Romania",
-        "linkedin": "LinkeIn",
-        "github": "GitHub",
-        "website": "mysite.site"
+      "Test CV": {
+        "name": "John",
+        "job_title": "Ds",
+        "email": "jd@example.com",
+        "phone": "00000",
+        "location": "Ro",
+        "linkedin": "ln",
+        "github": "gh",
+        "website": "j.com"
       }
     }
   ]

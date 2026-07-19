@@ -11,6 +11,7 @@ export component AppWindow inherits Window {
 
     in-out property <[string]> resumes-list;
 
+    callback menu-item-clicked(string, string); //(resume_name, action_type)
     callback save-personal-info(string, string, string, string, string, string, string, string, string);
 
     MenuBar {
@@ -20,10 +21,17 @@ export component AppWindow inherits Window {
                 title: resume;
                 if resume != "Add":MenuItem {
                     title: "Edit";
+                    activated => {
+                        menu-item-clicked(resume, "edit");
+                    }
                 }
 
                 if resume != "Add": MenuItem {
                     title: "Delete";
+
+                    activated => {
+                        menu-item-clicked(resume, "delete");
+                    }
                 }
             }
         }
