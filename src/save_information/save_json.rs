@@ -4,7 +4,7 @@ use std::io::{Read, Write};
 use std::path::Path;
 
 use crate::save_information::json_setup::{PersonalInfo, ResumeContainer, ResumeEntry};
-use crate::save_information::json_setup::RESUME_SAVE_DIR;
+use crate::save_information::json_setup::RESUME_SAVE_FILE;
 
 pub fn save_file_json(
     cv_name: String,
@@ -28,7 +28,7 @@ pub fn save_file_json(
         website,
     };
 
-    let file_path = RESUME_SAVE_DIR.join("resumes_data.json");
+    let file_path = &*RESUME_SAVE_FILE;
 
     let mut container = if file_path.exists() {
         match File::open(&file_path).and_then(|mut f| {

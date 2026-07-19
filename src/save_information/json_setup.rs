@@ -5,6 +5,7 @@ use std::path::{PathBuf};
 use std::fs;
 
 pub static RESUME_SAVE_DIR: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from("saves"));
+pub static RESUME_SAVE_FILE: LazyLock<PathBuf> = LazyLock::new(|| RESUME_SAVE_FILE.join("resume_data.json"));
 pub fn create_resume_folder() {
     if let Err(e) = fs::create_dir_all(RESUME_SAVE_DIR.clone()) {
         eprintln!("Failed to create directory '{:?}': {}", RESUME_SAVE_DIR.clone(), e);
