@@ -1,5 +1,16 @@
 use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
+use std::sync::LazyLock;
+use std::path::{PathBuf};
+use std::fs;
+
+pub static RESUME_SAVE_DIR: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from("saves"));
+pub fn create_resume_folder() {
+    if let Err(e) = fs::create_dir_all(RESUME_SAVE_DIR.clone()) {
+        eprintln!("Failed to create directory '{:?}': {}", RESUME_SAVE_DIR.clone(), e);
+        return;
+    }
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PersonalInfo{

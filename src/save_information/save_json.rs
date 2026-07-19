@@ -1,18 +1,23 @@
 use std::collections::HashMap;
 use std::fs::{self, File};
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::Path;
-use crate::save_information::json_definition::{PersonalInfo, ResumeContainer, ResumeEntry};
 
-pub fn save_file_json(cv_name: String, name: String, job_title: String, email: String, phone: String,
-                 location: String, linkedin: String, github: String, website: String) {
-    let dir_path = Path::new("saves");
-    if let Err(e) = fs::create_dir_all(dir_path) {
-        eprintln!("Failed to create directory 'saves': {}", e);
-        return;
-    }
+use crate::save_information::json_setup::{PersonalInfo, ResumeContainer, ResumeEntry};
+use crate::save_information::json_setup::RESUME_SAVE_DIR;
 
-    let info = PersonalInfo{
+pub fn save_file_json(
+    cv_name: String,
+    name: String,
+    job_title: String,
+    email: String,
+    phone: String,
+    location: String,
+    linkedin: String,
+    github: String,
+    website: String
+) {
+    let info = PersonalInfo {
         name,
         job_title,
         email,
@@ -23,14 +28,30 @@ pub fn save_file_json(cv_name: String, name: String, job_title: String, email: S
         website,
     };
 
-    let mut resume_map = HashMap::new();
-    resume_map.insert(cv_name.clone(), info);
+    let file_path = RESUME_SAVE_DIR.join("resumes_data.json");
 
-    let container = ResumeContainer{
-        resumes: vec![ResumeEntry {data: resume_map}],
+    let mut container = if file_path.exists() {
+        match File::open(&file_path).and_then(|mut f| {
+            let mut contents = String::new();
+            f.read_to_string(&mut contents)?;
+            Ok(contents)
+        }) {
+            Ok(contents) => serde_json::from_str::<ResumeContainer>(&contents).unwrap_or_else(|_| ResumeContainer { resumes: vec![] }),
+            Err(_) => ResumeContainer { resumes: vec![] },
+        }
+    } else {
+        ResumeContainer { resumes: vec![] }
     };
 
-    let json_data = match serde_json::to_string_pretty(&container){
+    if let Some(entry) = container.resumes.first_mut() {
+        entry.data.insert(cv_name, info);
+    } else {
+        let mut resume_map = HashMap::new();
+        resume_map.insert(cv_name, info);
+        container.resumes.push(ResumeEntry { data: resume_map });
+    }
+
+    let json_data = match serde_json::to_string_pretty(&container) {
         Ok(json) => json,
         Err(e) => {
             eprintln!("Failed to serialize resume data to JSON: {}", e);
@@ -38,11 +59,9 @@ pub fn save_file_json(cv_name: String, name: String, job_title: String, email: S
         }
     };
 
-    let file_path = dir_path.join("resumes_data.json");
-
     match File::create(&file_path) {
         Ok(mut file) => {
-            if let Err(e) = file.write_all(json_data.as_bytes()){
+            if let Err(e) = file.write_all(json_data.as_bytes()) {
                 eprintln!("Failed to write contents to file {:?}: {}", file_path, e);
             } else {
                 println!("Successfully saved data to {:?}", file_path);
@@ -52,5 +71,4 @@ pub fn save_file_json(cv_name: String, name: String, job_title: String, email: S
             eprintln!("Failed to create file {:?}: {}", file_path, e);
         }
     }
-
 }
