@@ -32,9 +32,9 @@ pub fn setup_resume_list(ui: &AppWindow) {
         }
     }
     if names.len() == 1 {
-        names.push(SharedString::from("----------------"));
+        names.push(SharedString::from("Add"));
     } else if names.is_empty() {
-        names.push(SharedString::from("(No resumes found)"));
+        names.push(SharedString::from("Add"));
     }
 
     names.sort();

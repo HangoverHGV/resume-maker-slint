@@ -16,11 +16,17 @@ export component AppWindow inherits Window {
     MenuBar {
         Menu {
             title: "Open";
-            for resume in root.resumes-list: MenuItem{
+            for resume in root.resumes-list: Menu {
                 title: resume;
+                if resume != "Add":MenuItem {
+                    title: "Edit";
+                }
+
+                if resume != "Add": MenuItem {
+                    title: "Delete";
+                }
             }
         }
-
     }
 
     HorizontalLayout {
