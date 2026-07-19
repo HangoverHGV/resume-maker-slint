@@ -1,6 +1,8 @@
-use slint::ComponentHandle;
+use slint::{ComponentHandle, SharedString, VecModel};
 use crate::AppWindow;
+use std::rc::Rc;
 use crate::save_information::save_json::save_file_json;
+use crate::save_information::load_json::load_all_resumes;
 
 pub fn setup_personal_data_save(ui: &AppWindow){
     let ui_handle = ui.as_weak();
@@ -15,4 +17,28 @@ pub fn setup_personal_data_save(ui: &AppWindow){
                        location.to_string(), linkedin.to_string(), github.to_string(), website.to_string());
 
     });
+}
+
+pub fn setup_resume_list(ui: &AppWindow) {
+    ui.set_resumes_list(Rc::new(VecModel::<SharedString>::default()).into());
+
+    let mut names = Vec::new();
+
+    if let Some(container) = load_all_resumes() {
+        for map in container.resumes.iter() {
+            for key in map.keys() {
+                names.push(slint::SharedString::from(key));
+            }
+        }
+    }
+    if names.len() == 1 {
+        names.push(SharedString::from("----------------"));
+    } else if names.is_empty() {
+        names.push(SharedString::from("(No resumes found)"));
+    }
+
+    names.sort();
+
+    let model = Rc::new(VecModel::from(names));
+    ui.set_resumes_list(model.into());
 }

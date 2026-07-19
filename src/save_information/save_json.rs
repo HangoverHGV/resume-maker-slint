@@ -3,7 +3,7 @@ use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::Path;
 
-use crate::save_information::json_setup::{PersonalInfo, ResumeContainer, ResumeEntry};
+use crate::save_information::json_setup::{PersonalInfo, ResumeContainer};
 use crate::save_information::json_setup::RESUME_SAVE_FILE;
 
 pub fn save_file_json(
@@ -44,11 +44,11 @@ pub fn save_file_json(
     };
 
     if let Some(entry) = container.resumes.first_mut() {
-        entry.data.insert(cv_name, info);
+        entry.insert(cv_name, info);
     } else {
         let mut resume_map = HashMap::new();
         resume_map.insert(cv_name, info);
-        container.resumes.push(ResumeEntry { data: resume_map });
+        container.resumes.push(resume_map);
     }
 
     let json_data = match serde_json::to_string_pretty(&container) {

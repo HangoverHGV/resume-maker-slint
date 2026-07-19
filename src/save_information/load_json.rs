@@ -9,7 +9,7 @@ pub fn load_all_resumes() -> Option<ResumeContainer> {
     }
 
     let mut file = match File::open(&file_path) {
-        Ok(f),
+        Ok(f) => f,
         Err(e) => {
             eprintln!("Failed to save file safely: {}", e);
             return None;
@@ -25,7 +25,7 @@ pub fn load_all_resumes() -> Option<ResumeContainer> {
     match serde_json::from_str::<ResumeContainer>(&json_string){
         Ok(container) => Some(container),
         Err(e) => {
-            eprintln!("Failed to parse resume JSON data: {}", e),
+            eprintln!("Failed to parse resume JSON data: {}", e);
             None
         }
     }

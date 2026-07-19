@@ -9,7 +9,19 @@ export component AppWindow inherits Window {
     preferred-width: 1000px;
     preferred-height: 700px;
 
+    in-out property <[string]> resumes-list;
+
     callback save-personal-info(string, string, string, string, string, string, string, string, string);
+
+    MenuBar {
+        Menu {
+            title: "Open";
+            for resume in root.resumes-list: MenuItem{
+                title: resume;
+            }
+        }
+
+    }
 
     HorizontalLayout {
 
@@ -25,8 +37,8 @@ export component AppWindow inherits Window {
             accessible-role: main;
             accessible-label: "Content";
             if (side-bar.current-item == 0): PersonalPage {
-                save-personal-info(cv_name, name, job_title, emai, phone, location, linkedin, github, website) => {
-                    root.save-personal-info(cv_name, name, job_title, emai, phone, location, linkedin, github, website);
+                save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website) => {
+                    root.save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website);
                 }
             }
         }

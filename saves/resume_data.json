@@ -1,0 +1,16 @@
+{
+  "resumes": [
+    {
+      "test": {
+        "name": "John Doe",
+        "job_title": "DS",
+        "email": "email@example.com",
+        "phone": "07844305222",
+        "location": "Romania",
+        "linkedin": "LinkeIn",
+        "github": "GitHub",
+        "website": "mysite.site"
+      }
+    }
+  ]
+}
