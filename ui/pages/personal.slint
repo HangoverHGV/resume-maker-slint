@@ -9,35 +9,17 @@ import {
     Button,
 } from "std-widgets.slint";
 
+import { PersonalInfo } from "../models/personal_info.slint";
+
 export component PersonalPage inherits Page {
     title: "Personal Info";
 
-    in-out property <string> cv-name;
-    in-out property <string> field-name;
-    in-out property <string> field-job-title;
-    in-out property <string> field-email;
-    in-out property <string> field-phone;
-    in-out property <string> field-location;
-    in-out property <string> field-linkedin;
-    in-out property <string> field-github;
-    in-out property <string> field-website;
-    in-out property <string> field-description;
+    in-out property <PersonalInfo> personal_data;
 
-    callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
+    callback save-personal-info(PersonalInfo);
 
     function run() {
-        root.save-personal-info(
-            root.cv-name,
-            root.field-name,
-            root.field-job-title,
-            root.field-email,
-            root.field-phone,
-            root.field-location,
-            root.field-linkedin,
-            root.field-github,
-            root.field-website,
-            root.field-description
-        );
+        root.save-personal-info(root.personal_data);
     }
 
     GroupBox {
@@ -68,7 +50,7 @@ export component PersonalPage inherits Page {
 
             LineEdit {
                 placeholder-text: "My CV";
-                text <=> root.cv-name;
+                text <=> root.personal_data.cv-name;
                 input-type: text;
                 font-size: Styling.font-size-normal;
                 accepted => {
@@ -87,7 +69,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "John Doe";
-                    text <=> root.field-name;
+                    text <=> root.personal_data.name;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -102,7 +84,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "Data Scientist";
-                    text <=> root.field-job-title;
+                    text <=> root.personal_data.job-title;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -121,7 +103,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "email@example.com";
-                    text <=> root.field-email;
+                    text <=> root.personal_data.email;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -136,7 +118,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "+40 1234 5678";
-                    text <=> root.field-phone;
+                    text <=> root.personal_data.phone;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -151,7 +133,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "Romania";
-                    text <=> root.field-location;
+                    text <=> root.personal_data.location;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -171,7 +153,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "https://www.linkedin.com/in/jdoe";
-                    text <=> root.field-linkedin;
+                    text <=> root.personal_data.linkedin;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -186,7 +168,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "https://github.com/jdoe";
-                    text <=> root.field-github;
+                    text <=> root.personal_data.github;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -201,7 +183,7 @@ export component PersonalPage inherits Page {
 
                 LineEdit {
                     placeholder-text: "https://jdoe.dev";
-                    text <=> root.field-website;
+                    text <=> root.personal_data.website;
                     input-type: text;
                     font-size: Styling.font-size-normal;
                     accepted => {
@@ -217,7 +199,7 @@ export component PersonalPage inherits Page {
 
             TextEdit {
                 placeholder-text: "Description";
-                text <=> root.field-description;
+                text <=> root.personal_data.description;
                 wrap: word-wrap;
                 font-size: Styling.font-size-normal;
                 enabled: true;

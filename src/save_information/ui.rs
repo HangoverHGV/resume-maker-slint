@@ -53,7 +53,6 @@ pub fn setup_resume_list(ui: &AppWindow) {
             }
         }
     }
-    names.push(SharedString::from("Add"));
 
     names.sort();
 
@@ -114,9 +113,21 @@ pub fn resume_actions(ui: &AppWindow) {
                     if let Err(e) = delete_resume_from_json(resume) {
                         eprintln!("Failed to delete resume: {}", e);
                     }
+                    setup_resume_list(&ui);
                 }
                 _ => {}
             }
         }
     });
+}
+
+pub fn clear_fields(ui: &AppWindow){
+    let ui_handle = ui.as_weak();
+
+    ui.on_clear_all_fields(move ||{
+        let ui = ui_handle.unwrap();
+        ui.set_cv_name("".into());
+        ui.set_field_name("".into())
+    });
+
 }

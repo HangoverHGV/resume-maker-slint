@@ -1,6 +1,6 @@
 import { SideBar } from "components/side_bar.slint";
 import { PersonalPage } from "./pages/personal.slint";
-
+import { PersonalInfo } from "models/personal_info.slint";
 
 export component AppWindow inherits Window {
     title: "Resume Maker";
@@ -11,23 +11,22 @@ export component AppWindow inherits Window {
 
     in-out property <[string]> resumes-list;
 
-    in-out property <string> cv-name;
-    in-out property <string> field-name;
-    in-out property <string> field-job-title;
-    in-out property <string> field-email;
-    in-out property <string> field-phone;
-    in-out property <string> field-location;
-    in-out property <string> field-linkedin;
-    in-out property <string> field-github;
-    in-out property <string> field-website;
-    in-out property <string> field-description;
+    in-out property <PersonalInfo> personal-info;
 
     callback menu-item-clicked(string, string); //(resume_name, action_type)
     callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
+    callback clear-all-fields();
 
     MenuBar {
         Menu {
             title: "Open";
+            MenuItem {
+                title: "Add";
+                activated => {
+                    clear-all-fields();
+                }
+            }
+            MenuSeparator {}
             for resume in root.resumes-list: Menu {
                 title: resume;
                 if resume != "Add":MenuItem {
