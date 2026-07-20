@@ -59,7 +59,6 @@ pub fn load_resume_into_ui(ui: &AppWindow, resume_name: &str) -> Result<(), Box<
     if let Some(entry) = container.resumes.iter().find(|map| map.contains_key(resume_name)) {
         if let Some(info) = entry.get(resume_name) {
 
-            // Set directly on the AppWindow! The <=> binding updates PersonalPage instantly.
             ui.set_cv_name(resume_name.into());
             ui.set_field_name(info.name.clone().into());
             ui.set_field_job_title(info.job_title.clone().into());
@@ -80,14 +79,12 @@ pub fn load_resume_into_ui(ui: &AppWindow, resume_name: &str) -> Result<(), Box<
 }
 
 pub fn resume_actions(ui: &AppWindow) {
-    // 1. Create the weak handle to pass safely into the 'static closure
-    let ui_handle = ui.as_weak();
+        let ui_handle = ui.as_weak();
 
     ui.on_menu_item_clicked(move |resume_name, action_type| {
         let resume = resume_name.as_str();
         let action = action_type.as_str();
 
-        // 2. Upgrade the weak handle to access the window properties safely
         if let Some(ui) = ui_handle.upgrade() {
             match action {
                 "edit" => {
@@ -96,9 +93,9 @@ pub fn resume_actions(ui: &AppWindow) {
                     }
                 }
                 "delete" => {
-                    // Your delete logic here...
-                    // e.g., delete_resume_from_json(resume);
-                    // setup_resume_list(&ui);
+                    if let Err(e) = delete_resume_from_json(resume) {
+                        eprintln!("Failed to delete resume: {}", e);
+                    }
                 }
                 _ => {}
             }
