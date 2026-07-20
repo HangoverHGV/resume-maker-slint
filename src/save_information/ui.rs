@@ -1,31 +1,44 @@
-use std::fs::File;
-use slint::{ComponentHandle, SharedString, VecModel};
 use crate::AppWindow;
-use std::rc::Rc;
-use crate::save_information::save_json::save_file_json;
-use crate::save_information::load_json::load_all_resumes;
 use crate::save_information::delete_json::delete_resume_from_json;
-use crate::save_information::json_setup::{ResumeContainer, RESUME_SAVE_FILE};
+use crate::save_information::json_setup::{RESUME_SAVE_FILE, ResumeContainer};
+use crate::save_information::load_json::load_all_resumes;
+use crate::save_information::save_json::save_file_json;
+use slint::{ComponentHandle, SharedString, VecModel};
+use std::fs::File;
+use std::rc::Rc;
 
-pub fn setup_personal_data_save(ui: &AppWindow){
+pub fn setup_personal_data_save(ui: &AppWindow) {
     let ui_handle = ui.as_weak();
-    ui.on_save_personal_info(move |cv_name, name, job_title,
-                                   email, phone, location,
-                                   linkedin, github, website, description |{
+    ui.on_save_personal_info(
+        move |cv_name,
+              name,
+              job_title,
+              email,
+              phone,
+              location,
+              linkedin,
+              github,
+              website,
+              description| {
+            save_file_json(
+                cv_name.to_string(),
+                name.to_string(),
+                job_title.to_string(),
+                email.to_string(),
+                phone.to_string(),
+                location.to_string(),
+                linkedin.to_string(),
+                github.to_string(),
+                website.to_string(),
+                description.to_string(),
+            );
 
-
-        save_file_json(cv_name.to_string(),
-                       name.to_string(), job_title.to_string(), email.to_string(), phone.to_string(),
-                       location.to_string(), linkedin.to_string(), github.to_string(), website.to_string(), description.to_string());
-
-        if let Some(ui) = ui_handle.upgrade() {
-            println!("Resume saved successfully. Repopulating resume list...");
-            setup_resume_list(&ui);
-        }
-
-    });
-
-
+            if let Some(ui) = ui_handle.upgrade() {
+                println!("Resume saved successfully. Repopulating resume list...");
+                setup_resume_list(&ui);
+            }
+        },
+    );
 }
 
 pub fn setup_resume_list(ui: &AppWindow) {
@@ -40,11 +53,7 @@ pub fn setup_resume_list(ui: &AppWindow) {
             }
         }
     }
-    if names.len() == 1 {
-        names.push(SharedString::from("Add"));
-    } else if names.is_empty() {
-        names.push(SharedString::from("Add"));
-    }
+    names.push(SharedString::from("Add"));
 
     names.sort();
 
@@ -52,13 +61,19 @@ pub fn setup_resume_list(ui: &AppWindow) {
     ui.set_resumes_list(model.into());
 }
 
-pub fn load_resume_into_ui(ui: &AppWindow, resume_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub fn load_resume_into_ui(
+    ui: &AppWindow,
+    resume_name: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
     let file = File::open(&*RESUME_SAVE_FILE)?;
     let container: ResumeContainer = serde_json::from_reader(file)?;
 
-    if let Some(entry) = container.resumes.iter().find(|map| map.contains_key(resume_name)) {
+    if let Some(entry) = container
+        .resumes
+        .iter()
+        .find(|map| map.contains_key(resume_name))
+    {
         if let Some(info) = entry.get(resume_name) {
-
             ui.set_cv_name(resume_name.into());
             ui.set_field_name(info.name.clone().into());
             ui.set_field_job_title(info.job_title.clone().into());
@@ -70,7 +85,10 @@ pub fn load_resume_into_ui(ui: &AppWindow, resume_name: &str) -> Result<(), Box<
             ui.set_field_website(info.website.clone().into());
             ui.set_field_description(info.description.clone().into());
 
-            println!("Populated UI fields successfully for profile: {}", resume_name);
+            println!(
+                "Populated UI fields successfully for profile: {}",
+                resume_name
+            );
             return Ok(());
         }
     }
@@ -79,7 +97,7 @@ pub fn load_resume_into_ui(ui: &AppWindow, resume_name: &str) -> Result<(), Box<
 }
 
 pub fn resume_actions(ui: &AppWindow) {
-        let ui_handle = ui.as_weak();
+    let ui_handle = ui.as_weak();
 
     ui.on_menu_item_clicked(move |resume_name, action_type| {
         let resume = resume_name.as_str();
