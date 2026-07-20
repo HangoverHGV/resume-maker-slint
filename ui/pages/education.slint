@@ -1,0 +1,29 @@
+import { Page } from "../components/page.slint";
+import { Styling } from "../assets/styles.slint";
+import {
+    GroupBox,
+    VerticalBox,
+    LineEdit,
+    TextEdit,
+    HorizontalBox,
+    Button,
+} from "std-widgets.slint";
+
+import { EducationData } from "../models/education_data.slint";
+
+export component PersonalPage inherits Page {
+    title: "Personal Info";
+
+    // Receives and sends two-way updates from AppWindow
+    in-out property <EducationData> personal_data;
+
+    callback save-education-info(EducationData);
+
+    function run() {
+        root.save-education-info(root.personal_data);
+    }
+
+    GroupBox {
+
+    }
+}

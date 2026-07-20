@@ -1,6 +1,7 @@
 import { SideBar } from "components/side_bar.slint";
 import { PersonalPage } from "./pages/personal.slint";
 import { PersonalData } from "models/personal_info.slint";
+import { EducationData } from "./models/education_data.slint";
 
 export component AppWindow inherits Window {
     title: "Resume Maker";
@@ -12,9 +13,11 @@ export component AppWindow inherits Window {
     in-out property <[string]> resumes-list;
 
     in-out property <PersonalData> personal-data;
+    in-out property <EducationData> education-data;
 
     callback menu-item-clicked(string, string); //(resume_name, action_type)
     callback save-personal-info(PersonalData);
+    callback save-education-info(PersonalData);
     callback clear-all-fields();
 
     MenuBar {
