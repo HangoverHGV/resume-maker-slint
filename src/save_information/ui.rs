@@ -9,36 +9,25 @@ use std::rc::Rc;
 
 pub fn setup_personal_data_save(ui: &AppWindow) {
     let ui_handle = ui.as_weak();
-    ui.on_save_personal_info(
-        move |cv_name,
-              name,
-              job_title,
-              email,
-              phone,
-              location,
-              linkedin,
-              github,
-              website,
-              description| {
-            save_file_json(
-                cv_name.to_string(),
-                name.to_string(),
-                job_title.to_string(),
-                email.to_string(),
-                phone.to_string(),
-                location.to_string(),
-                linkedin.to_string(),
-                github.to_string(),
-                website.to_string(),
-                description.to_string(),
-            );
+    ui.on_save_personal_info(move |data| {
+        save_file_json(
+            data.cv_name.to_string(),
+            data.name.to_string(),
+            data.job_title.to_string(),
+            data.email.to_string(),
+            data.phone.to_string(),
+            data.location.to_string(),
+            data.linkedin.to_string(),
+            data.github.to_string(),
+            data.website.to_string(),
+            data.description.to_string(),
+        );
 
-            if let Some(ui) = ui_handle.upgrade() {
-                println!("Resume saved successfully. Repopulating resume list...");
-                setup_resume_list(&ui);
-            }
-        },
-    );
+        if let Some(ui) = ui_handle.upgrade() {
+            println!("Resume saved successfully. Repopulating resume list...");
+            setup_resume_list(&ui);
+        }
+    });
 }
 
 pub fn setup_resume_list(ui: &AppWindow) {
@@ -73,16 +62,8 @@ pub fn load_resume_into_ui(
         .find(|map| map.contains_key(resume_name))
     {
         if let Some(info) = entry.get(resume_name) {
-            ui.set_cv_name(resume_name.into());
-            ui.set_field_name(info.name.clone().into());
-            ui.set_field_job_title(info.job_title.clone().into());
-            ui.set_field_email(info.email.clone().into());
-            ui.set_field_phone(info.phone.clone().into());
-            ui.set_field_location(info.location.clone().into());
-            ui.set_field_linkedin(info.linkedin.clone().into());
-            ui.set_field_github(info.github.clone().into());
-            ui.set_field_website(info.website.clone().into());
-            ui.set_field_description(info.description.clone().into());
+            // Converts backend struct + extra cv_name parameter in 1 clean setter
+            ui.set_personal_data(info.to_slint(resume_name));
 
             println!(
                 "Populated UI fields successfully for profile: {}",
@@ -121,13 +102,12 @@ pub fn resume_actions(ui: &AppWindow) {
     });
 }
 
-pub fn clear_fields(ui: &AppWindow){
+pub fn clear_fields(ui: &AppWindow) {
     let ui_handle = ui.as_weak();
 
-    ui.on_clear_all_fields(move ||{
-        let ui = ui_handle.unwrap();
-        ui.set_cv_name("".into());
-        ui.set_field_name("".into())
+    ui.on_clear_all_fields(move || {
+        if let Some(ui) = ui_handle.upgrade() {
+            ui.set_personal_data(Default::default());
+        }
     });
-
 }

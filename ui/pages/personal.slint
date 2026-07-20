@@ -9,14 +9,15 @@ import {
     Button,
 } from "std-widgets.slint";
 
-import { PersonalInfo } from "../models/personal_info.slint";
+import { PersonalData } from "../models/personal_info.slint";
 
 export component PersonalPage inherits Page {
     title: "Personal Info";
 
-    in-out property <PersonalInfo> personal_data;
+    // Receives and sends two-way updates from AppWindow
+    in-out property <PersonalData> personal_data;
 
-    callback save-personal-info(PersonalInfo);
+    callback save-personal-info(PersonalData);
 
     function run() {
         root.save-personal-info(root.personal_data);

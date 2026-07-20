@@ -1,6 +1,6 @@
 import { SideBar } from "components/side_bar.slint";
 import { PersonalPage } from "./pages/personal.slint";
-import { PersonalInfo } from "models/personal_info.slint";
+import { PersonalData } from "models/personal_info.slint";
 
 export component AppWindow inherits Window {
     title: "Resume Maker";
@@ -11,10 +11,10 @@ export component AppWindow inherits Window {
 
     in-out property <[string]> resumes-list;
 
-    in-out property <PersonalInfo> personal-info;
+    in-out property <PersonalData> personal-data;
 
     callback menu-item-clicked(string, string); //(resume_name, action_type)
-    callback save-personal-info(string, string, string, string, string, string, string, string, string, string);
+    callback save-personal-info(PersonalData);
     callback clear-all-fields();
 
     MenuBar {
@@ -62,19 +62,10 @@ export component AppWindow inherits Window {
             accessible-label: "Content";
             if (side-bar.current-item == 0): PersonalPage {
 
-                cv-name: root.cv-name;
-                        field-name: root.field-name;
-                        field-job-title: root.field-job-title;
-                        field-email: root.field-email;
-                        field-phone: root.field-phone;
-                        field-location: root.field-location;
-                        field-linkedin: root.field-linkedin;
-                        field-github: root.field-github;
-                        field-website: root.field-website;
-                        field-description: root.field-description;
+                personal_data: personal-data;
 
-                save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description) => {
-                    root.save-personal-info(cv_name, name, job_title, email, phone, location, linkedin, github, website, description);
+                save-personal-info(personal-data) => {
+                    root.save-personal-info(personal-data);
                 }
             }
         }
