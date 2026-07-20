@@ -62,7 +62,7 @@ pub fn load_resume_into_ui(
         .find(|map| map.contains_key(resume_name))
     {
         if let Some(info) = entry.get(resume_name) {
-            // Converts backend struct + extra cv_name parameter in 1 clean setter
+            ui.set_personal_data(Default::default());
             ui.set_personal_data(info.to_slint(resume_name));
 
             println!(
