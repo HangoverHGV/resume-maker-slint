@@ -8,22 +8,76 @@ import {
     HorizontalBox,
     Button,
 } from "std-widgets.slint";
+import { FieldType } from "../components/field_type.slint";
+import { Field } from "../components/field.slint";
 
-import { EducationData } from "../models/education_data.slint";
+import { EducationData, DateStruct } from "../models/education_data.slint";
 
-export component PersonalPage inherits Page {
-    title: "Personal Info";
+export component EducationPage inherits Page {
+    title: "Education Info";
 
     // Receives and sends two-way updates from AppWindow
-    in-out property <EducationData> personal_data;
+    in-out property <EducationData> education_data;
 
     callback save-education-info(EducationData);
 
     function run() {
-        root.save-education-info(root.personal_data);
+        root.save-education-info(root.education_data);
     }
 
     GroupBox {
+        VerticalBox {
 
+            spacing: Styling.default-spacing;
+            alignment: start;
+            padding: Styling.default-padding;
+
+            HorizontalBox {
+                alignment: start;
+                padding: 0px;
+                spacing: 5px;
+                Button {
+                    max-width: 50px;
+                    text: "Save";
+                    primary: true;
+
+                    clicked => {
+                        run()
+                    }
+                }
+            }
+
+            Field {
+                text_field: "Education";
+                placeholder_text: "Master's degree";
+                field_type: FieldType.text-field;
+                value <=> root.education_data.education-type;
+                run => { root.run() }
+            }
+
+            Field {
+                text_field: "University Name";
+                placeholder_text: "University of Sciences";
+                field_type: FieldType.text-field;
+                value <=> root.education_data.university;
+                run => { root.run() }
+            }
+
+            HorizontalBox {
+                Field {
+                    text_field: "Start Date";
+                    field_type: FieldType.date-field;
+                    date_value <=> root.education_data.period-start;
+                    run => { root.run() }
+                }
+
+                Field {
+                    text_field: "End Date";
+                    field_type: FieldType.date-field;
+                    date_value <=> root.education_data.period-end;
+                    run => { root.run() }
+                }
+            }
+        }
     }
 }

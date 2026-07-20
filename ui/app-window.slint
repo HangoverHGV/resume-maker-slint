@@ -2,13 +2,14 @@ import { SideBar } from "components/side_bar.slint";
 import { PersonalPage } from "./pages/personal.slint";
 import { PersonalData } from "models/personal_info.slint";
 import { EducationData } from "./models/education_data.slint";
+import { EducationPage } from "./pages/education.slint";
 
 export component AppWindow inherits Window {
     title: "Resume Maker";
     maximized: false;
 
-    preferred-width: 1000px;
-    preferred-height: 700px;
+    preferred-width: 1300px;
+    preferred-height: 800px;
 
     in-out property <[string]> resumes-list;
 
@@ -17,7 +18,7 @@ export component AppWindow inherits Window {
 
     callback menu-item-clicked(string, string); //(resume_name, action_type)
     callback save-personal-info(PersonalData);
-    callback save-education-info(PersonalData);
+    callback save-education-info(EducationData);
     callback clear-all-fields();
 
     MenuBar {
@@ -57,6 +58,7 @@ export component AppWindow inherits Window {
             accessible-label: "Sidebar";
             model: [
                 "Personal Info",
+                "Education Info",
             ];
         }
 
@@ -69,6 +71,13 @@ export component AppWindow inherits Window {
 
                 save-personal-info(personal-data) => {
                     root.save-personal-info(personal-data);
+                }
+            }
+
+            if (side-bar.current-item == 1): EducationPage{
+                education_data: education-data;
+                save-education-info(education-data) => {
+                    root.save-education-info(education-data);
                 }
             }
         }

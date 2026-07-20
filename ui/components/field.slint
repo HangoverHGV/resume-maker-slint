@@ -1,0 +1,65 @@
+import {
+    LineEdit,
+    DatePickerPopup,
+    Button,
+    VerticalBox,
+} from "std-widgets.slint";
+import { Styling } from "../assets/styles.slint";
+import { DateStruct } from "../models/education_data.slint";
+import { FieldType } from "./field_type.slint";
+
+export component Field {
+    in property <FieldType> field_type;
+    in property <string> text_field;
+    in property <string> placeholder_text;
+
+    callback run();
+
+    // Scalar text property (used when field_type == text-field)
+    in-out property <string> value;
+
+    // Date property (used when field_type == date-field)
+    in-out property <DateStruct> date_value;
+
+    date-picker := DatePickerPopup {
+        x: (root.width - self.width) / 2;
+        y: (root.height - self.height) / 2;
+        accepted(date) => {
+            root.date_value = {
+                year: date.year,
+                month: date.month
+            };
+            root.run();
+        }
+    }
+
+    VerticalBox {
+        spacing: Styling.default-spacing;
+        alignment: start;
+        padding: Styling.default-padding;
+
+        Text {
+            text: root.text_field;
+            font-size: Styling.font-size-normal;
+        }
+
+        if (root.field_type == FieldType.text-field): LineEdit {
+            placeholder-text: root.placeholder_text;
+            text <=> root.value;
+            input-type: text;
+            font-size: Styling.font-size-normal;
+            accepted => {
+                root.run();
+            }
+        }
+
+        if (root.field_type == FieldType.date-field): Button {
+            text: root.date_value.year > 0
+                ? root.date_value.month + " / " + root.date_value.year
+                : "Select Date";
+            clicked => {
+                date-picker.show();
+            }
+        }
+    }
+}
