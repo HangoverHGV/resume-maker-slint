@@ -853,6 +853,7 @@ dependencies = [
  "iana-time-zone",
  "js-sys",
  "num-traits",
+ "serde",
  "wasm-bindgen",
  "windows-link",
 ]
@@ -4822,6 +4823,7 @@ checksum = "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
 name = "resume-maker-slint"
 version = "0.2.0"
 dependencies = [
+ "chrono",
  "serde",
  "serde_json",
  "slint",

@@ -78,6 +78,13 @@ export component EducationPage inherits Page {
                     run => { root.run() }
                 }
             }
+            Field {
+                text_field: "Thesis";
+                placeholder_text: "Leave empty if you want";
+                field_type: FieldType.text-field;
+                value <=> root.education_data.thesis;
+                run => {root.run()}
+            }
         }
     }
 }

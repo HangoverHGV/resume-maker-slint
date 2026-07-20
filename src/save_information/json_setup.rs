@@ -6,6 +6,7 @@ use std::path::PathBuf;
 use std::sync::LazyLock;
 use struct_iterable::Iterable;
 use crate::PersonalData;
+use chrono::NaiveDate;
 
 pub static RESUME_SAVE_DIR: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from("saves"));
 pub static RESUME_SAVE_FILE: LazyLock<PathBuf> =
@@ -80,6 +81,15 @@ impl PersonalInfo {
 
         (cv_name, info)
     }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Iterable, Default)]
+pub struct EducationInfo{
+    pub education_type: String,
+    pub university: String,
+    pub period_start: NaiveDate,
+    pub period_end: NaiveDate,
+    pub thesis: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
